@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 
 #Nombre de traitements
 K = 10
@@ -8,7 +8,7 @@ listeK = []
 N = 1000
 
 for i in range(K):
-    listeK[i] = numpy.random(1);
+    listeK.append(np.random.rand())
 
 print(listeK)
 #test
