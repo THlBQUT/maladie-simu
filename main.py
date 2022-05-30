@@ -51,6 +51,8 @@ pkn = [0]*K
 maxpkn = 0
 listePatients = [0]*K
 listeSurvecus = [0]*K
+courbe = []
+
 def strat2init(n):
     listePatients[n] += 1
     pkn[n] = np.random.binomial(K, probaK[n])
@@ -62,6 +64,10 @@ def strat2choix(n):
     pkn[n] = np.random.binomial(N, probaK[n])/listePatients[n]
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
+    addPts(courbe)
+
+def addPts(courbe):
+        courbe.append(listeSurvecus[4])
 
 #initialisation
 for j in range(K):
@@ -82,5 +88,7 @@ for j in range(K,N):
 
 print(pkn)
 print(listePatients)
-plt.show()
 print(listeSurvecus)
+print(courbe)
+plt.plot(courbe)
+plt.show()
