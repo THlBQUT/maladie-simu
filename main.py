@@ -44,3 +44,5 @@ plt.xlabel("Remèdes")
 plt.ylabel("Nombre de patients")
 plt.suptitle("Stratégie n°1")
 plt.show()
+
+
