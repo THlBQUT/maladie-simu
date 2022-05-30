@@ -2,7 +2,7 @@ import numpy as np
 import random as rd
 import matplotlib.pyplot as plt
 
-def addToListstrat1(n):
+def addToListStrat1(n):
     listePatients[n] += 1
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
@@ -22,7 +22,7 @@ nbRep = 10
 for i in range(nbRep):
     for j in range(N):
         chosenK = rd.randrange(K)
-        addToListstrat1(chosenK)
+        addToListStrat1(chosenK)
 
 for i in range(K):
     listePatients[i] /= nbRep
@@ -82,5 +82,5 @@ for j in range(K,N):
 
 print(pkn)
 print(listePatients)
-
-
+plt.show()
+print(listeSurvecus)
