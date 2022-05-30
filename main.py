@@ -15,7 +15,7 @@ listePatients = [0]*K
 listeSurvecus = [0]*K
 
 #Nombre de patients
-N = 100
+N = 10000
 nbRep = 10
 
 #Strategie 1
@@ -56,7 +56,7 @@ def strat2init(n):
 
 def strat2choix(n):
     listePatients[n] += 1
-    pkn[n] = np.random.binomial(N, probaK[n])
+    pkn[n] = np.random.binomial(N, probaK[n])/listePatients[n]
 
 #initialisation
 for j in range(K):
@@ -66,13 +66,10 @@ for j in range(K):
     if pkn[maxpkn] < pkn[j]:
         maxpkn = j
 
-print(pkn)
-
 #initialisation fin
 
 for j in range(K,N):
     strat2choix(maxpkn)
-    print(pkn)
     for i in range(K):
         if pkn[maxpkn] < pkn[i]:
             maxpkn = i
