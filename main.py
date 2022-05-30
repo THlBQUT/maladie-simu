@@ -50,13 +50,18 @@ plt.show()
 pkn = [0]*K
 maxpkn = 0
 listePatients = [0]*K
+listeSurvecus = [0]*K
 def strat2init(n):
     listePatients[n] += 1
-    pkn[n] = np.random.binomial(N, probaK[n])
+    pkn[n] = np.random.binomial(K, probaK[n])
+    if(np.random.binomial(1, probaK[n]) == 1):
+        listeSurvecus[n] += 1
 
 def strat2choix(n):
     listePatients[n] += 1
     pkn[n] = np.random.binomial(N, probaK[n])/listePatients[n]
+    if(np.random.binomial(1, probaK[n]) == 1):
+        listeSurvecus[n] += 1
 
 #initialisation
 for j in range(K):
@@ -70,6 +75,7 @@ for j in range(K):
 
 for j in range(K,N):
     strat2choix(maxpkn)
+
     for i in range(K):
         if pkn[maxpkn] < pkn[i]:
             maxpkn = i
