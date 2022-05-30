@@ -2,7 +2,7 @@ import numpy as np
 import random as rd
 import matplotlib.pyplot as plt
 
-def addToList(n):
+def addToListstrat1(n):
     listePatients[n] += 1
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
@@ -15,13 +15,14 @@ listePatients = [0]*K
 listeSurvecus = [0]*K
 
 #Nombre de patients
-N = 1000
+N = 100
 nbRep = 10
 
+#Strategie 1
 for i in range(nbRep):
     for j in range(N):
         chosenK = rd.randrange(K)
-        addToList(chosenK)
+        addToListstrat1(chosenK)
 
 for i in range(K):
     listePatients[i] /= nbRep
@@ -44,5 +45,39 @@ plt.xlabel("Remèdes")
 plt.ylabel("Nombre de patients")
 plt.suptitle("Stratégie n°1")
 plt.show()
+
+#strategie 2
+pkn = [0]*K
+maxpkn = 0
+listePatients = [0]*K
+def strat2init(n):
+    listePatients[n] += 1
+    pkn[n] = np.random.binomial(N, probaK[n])
+
+def strat2choix(n):
+    listePatients[n] += 1
+    pkn[n] = np.random.binomial(N, probaK[n])
+
+#initialisation
+for j in range(K):
+    strat2init(j)
+
+for j in range(K):
+    if pkn[maxpkn] < pkn[j]:
+        maxpkn = j
+
+print(pkn)
+
+#initialisation fin
+
+for j in range(K,N):
+    strat2choix(maxpkn)
+    print(pkn)
+    for i in range(K):
+        if pkn[maxpkn] < pkn[i]:
+            maxpkn = i
+
+print(pkn)
+print(listePatients)
 
 
