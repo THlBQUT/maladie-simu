@@ -68,9 +68,6 @@ def strat2choix(n):
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
     addPts()
-    moyenneCourbe()
-
-def moyenneCourbe()
 
 def addPts():
         courbe0.append(listeSurvecus[0])
