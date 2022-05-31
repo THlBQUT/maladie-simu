@@ -70,16 +70,16 @@ def strat2choix(n):
     addPts()
 
 def addPts():
-        courbe0.append(listeSurvecus[0])
-        courbe1.append(listeSurvecus[1])
-        courbe2.append(listeSurvecus[2])
-        courbe3.append(listeSurvecus[3])
-        courbe4.append(listeSurvecus[4])
-        courbe5.append(listeSurvecus[5])
-        courbe6.append(listeSurvecus[6])
-        courbe7.append(listeSurvecus[7])
-        courbe8.append(listeSurvecus[8])
-        courbe9.append(listeSurvecus[9])
+    courbe0.append(listeSurvecus[0])
+    courbe1.append(listeSurvecus[1])
+    courbe2.append(listeSurvecus[2])
+    courbe3.append(listeSurvecus[3])
+    courbe4.append(listeSurvecus[4])
+    courbe5.append(listeSurvecus[5])
+    courbe6.append(listeSurvecus[6])
+    courbe7.append(listeSurvecus[7])
+    courbe8.append(listeSurvecus[8])
+    courbe9.append(listeSurvecus[9])
 
 for rep in range(1):
     #initialisation
@@ -114,3 +114,77 @@ plt.plot(courbe7)
 plt.plot(courbe8)
 plt.plot(courbe9)
 plt.show()
+
+#strategie 3
+pkn = [0]*K
+bornSupPkn = [0]*K
+maxpkn = 0
+listePatients = [0]*K
+listeSurvecus = [0]*K
+courbe0 = []; courbe1 = []; courbe2 = []; courbe3 = []; courbe4 = []
+courbe5 = []; courbe6 = []; courbe7 = []; courbe8 = []; courbe9 = []
+
+def strat3init(n):
+    listePatients[n] += 1
+    pkn[n] = np.random.binomial(K, probaK[n])
+    bornSupPkn[n] = pkn[n] + np.sqrt(2*np.log(N)/listePatients[n])
+    if(np.random.binomial(1, probaK[n]) == 1):
+        listeSurvecus[n] += 1
+
+def strat3choix(n):
+    listePatients[n] += 1
+    pkn[n] = np.random.binomial(N, probaK[n])/listePatients[n]
+    bornSupPkn[n] = pkn[n] + np.sqrt(2*np.log(N)/listePatients[n])
+
+    if(np.random.binomial(1, probaK[n]) == 1):
+        listeSurvecus[n] += 1
+    addPts()
+
+def addPts():
+    courbe0.append(listeSurvecus[0])
+    courbe1.append(listeSurvecus[1])
+    courbe2.append(listeSurvecus[2])
+    courbe3.append(listeSurvecus[3])
+    courbe4.append(listeSurvecus[4])
+    courbe5.append(listeSurvecus[5])
+    courbe6.append(listeSurvecus[6])
+    courbe7.append(listeSurvecus[7])
+    courbe8.append(listeSurvecus[8])
+    courbe9.append(listeSurvecus[9])
+
+for rep in range(1):
+    #initialisation
+    for j in range(K):
+        strat3init(j)
+
+    for j in range(K):
+        if bornSupPkn[maxpkn] < bornSupPkn[j]:
+            maxpkn = j
+
+    #initialisation fin
+
+    for j in range(K,N):
+        strat3choix(maxpkn)
+
+        for i in range(K):
+            if bornSupPkn[maxpkn] < bornSupPkn[i]:
+                maxpkn = i
+
+print(pkn)
+print(bornSupPkn)
+print(listePatients)
+print(listeSurvecus)
+
+plt.plot(courbe0)
+plt.plot(courbe1)
+plt.plot(courbe2)
+plt.plot(courbe3)
+plt.plot(courbe4)
+plt.plot(courbe5)
+plt.plot(courbe6)
+plt.plot(courbe7)
+plt.plot(courbe8)
+plt.plot(courbe9)
+plt.show()
+
+
