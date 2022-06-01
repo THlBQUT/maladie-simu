@@ -33,7 +33,7 @@ print(listeSurvecus)
 
 names = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
-plt.figure(figsize=(9, 6))
+plt.figure(figsize=(12, 6))
 
 plt.subplot(121)
 plt.bar(names, listeSurvecus)
@@ -49,41 +49,36 @@ plt.show()
 #strategie 2
 pkn = [0]*K
 maxpkn = 0
+# listes pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de personnes guéris
 courbe0 = np.zeros(N); courbe1 = np.zeros(N); courbe2 = np.zeros(N); courbe3 = np.zeros(N);
 courbe4 = np.zeros(N); courbe5 = np.zeros(N); courbe6 = np.zeros(N); courbe7 = np.zeros(N);
 courbe8 = np.zeros(N); courbe9 = np.zeros(N)
+
+# listes pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de pers ayant eu le remede X
+NbPatient0 = np.zeros(N); NbPatient1 = np.zeros(N); NbPatient2 = np.zeros(N); NbPatient3 = np.zeros(N);
+NbPatient4 = np.zeros(N); NbPatient5 = np.zeros(N); NbPatient6 = np.zeros(N); NbPatient7 = np.zeros(N);
+NbPatient8 = np.zeros(N); NbPatient9 = np.zeros(N)
 
 def strat2init(n):
     listePatients[n] += 1
     pkn[n] = np.random.binomial(K, probaK[n])
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
-    courbe0[0] = 0
-    courbe1[0] = 0
-    courbe2[0] = 0
-    courbe3[0] = 0
-    courbe4[0] = 0
-    courbe5[0] = 0
-    courbe6[0] = 0
-    courbe7[0] = 0
-    courbe8[0] = 0
-    courbe9[0] = 0
+    courbe0[0] , courbe1[0], courbe2[0], courbe3[0], courbe4[0] = 0, 0, 0, 0, 0
+    courbe5[0] , courbe6[0], courbe7[0], courbe8[0], courbe9[0] = 0, 0, 0, 0, 0
 
 def strat2choix(n,N):
     listePatients[n] += 1
     pkn[n] = np.random.binomial(N, probaK[n])/listePatients[n]
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
-    courbe0[N] += listeSurvecus[0]
-    courbe1[N] += listeSurvecus[1]
-    courbe2[N] += listeSurvecus[2]
-    courbe3[N] += listeSurvecus[3]
-    courbe4[N] += listeSurvecus[4]
-    courbe5[N] += listeSurvecus[5]
-    courbe6[N] += listeSurvecus[6]
-    courbe7[N] += listeSurvecus[7]
-    courbe8[N] += listeSurvecus[8]
+    #Incrémentation la liste des personnes guéris dans la liste de chaque remèdes N étant le numéro du patient
+    courbe0[N] += listeSurvecus[0]; courbe1[N] += listeSurvecus[1]; courbe2[N] += listeSurvecus[2]
+    courbe3[N] += listeSurvecus[3]; courbe4[N] += listeSurvecus[4]; courbe5[N] += listeSurvecus[5]
+    courbe6[N] += listeSurvecus[6]; courbe7[N] += listeSurvecus[7]; courbe8[N] += listeSurvecus[8]
     courbe9[N] += listeSurvecus[9]
+    NbPatient0[N] += listePatients[0]
+
 
 for rep in range(10):
     listePatients = [0] * K
@@ -122,18 +117,22 @@ plt.grid()
 plt.legend()
 plt.show()
 
-print(listePatients)
+plt.plot(courbe4/(N*10),label='Remède 1')
+plt.title('Evolution du nombre de patients guéris en \n fonction du nombre de patients testés')
+plt.show()
+
+print(courbe4/10)
 print(listeSurvecus)
 
 #strategie 3
 pkn = [0]*K
 bornSupPkn = [0]*K
 maxpkn = 0
-listePatients = [0]*K
-listeSurvecus = [0]*K
+# Creation d'une liste pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de personnes guéris
 courbe0 = np.zeros(N); courbe1 = np.zeros(N); courbe2 = np.zeros(N); courbe3 = np.zeros(N);
 courbe4 = np.zeros(N); courbe5 = np.zeros(N); courbe6 = np.zeros(N); courbe7 = np.zeros(N);
 courbe8 = np.zeros(N); courbe9 = np.zeros(N)
+
 
 def strat3init(n):
     listePatients[n] += 1
@@ -141,16 +140,8 @@ def strat3init(n):
     bornSupPkn[n] = pkn[n] + np.sqrt(2*np.log(N)/listePatients[n])
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
-    courbe0[0] = 0
-    courbe1[0] = 0
-    courbe2[0] = 0
-    courbe3[0] = 0
-    courbe4[0] = 0
-    courbe5[0] = 0
-    courbe6[0] = 0
-    courbe7[0] = 0
-    courbe8[0] = 0
-    courbe9[0] = 0
+    courbe0[0] , courbe1[0], courbe2[0], courbe3[0], courbe4[0] = 0, 0, 0, 0, 0
+    courbe5[0] , courbe6[0], courbe7[0], courbe8[0], courbe9[0] = 0, 0, 0, 0, 0
 
 def strat3choix(n,N):
     listePatients[n] += 1
@@ -159,15 +150,10 @@ def strat3choix(n,N):
 
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
-    courbe0[N] += listeSurvecus[0]
-    courbe1[N] += listeSurvecus[1]
-    courbe2[N] += listeSurvecus[2]
-    courbe3[N] += listeSurvecus[3]
-    courbe4[N] += listeSurvecus[4]
-    courbe5[N] += listeSurvecus[5]
-    courbe6[N] += listeSurvecus[6]
-    courbe7[N] += listeSurvecus[7]
-    courbe8[N] += listeSurvecus[8]
+    #Incrémentation la liste des personnes guéris dans la liste de chaque remèdes N étant le numéro du patient
+    courbe0[N] += listeSurvecus[0]; courbe1[N] += listeSurvecus[1]; courbe2[N] += listeSurvecus[2]
+    courbe3[N] += listeSurvecus[3]; courbe4[N] += listeSurvecus[4]; courbe5[N] += listeSurvecus[5]
+    courbe6[N] += listeSurvecus[6]; courbe7[N] += listeSurvecus[7]; courbe8[N] += listeSurvecus[8]
     courbe9[N] += listeSurvecus[9]
 
 for rep in range(10):
