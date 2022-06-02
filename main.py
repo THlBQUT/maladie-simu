@@ -152,6 +152,11 @@ courbe0 = np.zeros(N); courbe1 = np.zeros(N); courbe2 = np.zeros(N); courbe3 = n
 courbe4 = np.zeros(N); courbe5 = np.zeros(N); courbe6 = np.zeros(N); courbe7 = np.zeros(N);
 courbe8 = np.zeros(N); courbe9 = np.zeros(N)
 
+# listes pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de pers ayant eu le remede X
+NbPatient0 = np.zeros(N); NbPatient1 = np.zeros(N); NbPatient2 = np.zeros(N); NbPatient3 = np.zeros(N);
+NbPatient4 = np.zeros(N); NbPatient5 = np.zeros(N); NbPatient6 = np.zeros(N); NbPatient7 = np.zeros(N);
+NbPatient8 = np.zeros(N); NbPatient9 = np.zeros(N)
+
 
 def strat3init(n):
     listePatients[n] += 1
@@ -174,6 +179,11 @@ def strat3choix(n,N):
     courbe3[N] += listeSurvecus[3]; courbe4[N] += listeSurvecus[4]; courbe5[N] += listeSurvecus[5]
     courbe6[N] += listeSurvecus[6]; courbe7[N] += listeSurvecus[7]; courbe8[N] += listeSurvecus[8]
     courbe9[N] += listeSurvecus[9]
+    NbPatient0[N] += listeSurvecus[0] / listePatients[0]; NbPatient1[N] += listeSurvecus[1] / listePatients[1]
+    NbPatient2[N] += listeSurvecus[2] / listePatients[2]; NbPatient3[N] += listeSurvecus[3] / listePatients[3]
+    NbPatient4[N] += listeSurvecus[4] / listePatients[4]; NbPatient5[N] += listeSurvecus[5] / listePatients[5]
+    NbPatient6[N] += listeSurvecus[6] / listePatients[6]; NbPatient7[N] += listeSurvecus[7] / listePatients[7]
+    NbPatient8[N] += listeSurvecus[8] / listePatients[8]; NbPatient9[N] += listeSurvecus[9] / listePatients[9]
 
 for rep in range(10):
     listePatients = [0] * K
@@ -217,4 +227,22 @@ plt.grid()
 plt.legend()
 plt.show()
 
+ax = plt.subplot(111)
+plt.plot(NbPatient0,label='Remède 1')
+plt.plot(NbPatient1,label='Remède 2')
+plt.plot(NbPatient2,label='Remède 3')
+plt.plot(NbPatient3,label='Remède 4')
+plt.plot(NbPatient4,label='Remède 5')
+plt.plot(NbPatient5,label='Remède 6')
+plt.plot(NbPatient6,label='Remède 7')
+plt.plot(NbPatient7,label='Remède 8')
+plt.plot(NbPatient8,label='Remède 9')
+plt.plot(NbPatient9,label='Remède 10')
+plt.title('Pourcentage de patients guéris en \n fonction du nombre de patients testés')
+plt.xlabel('Somme des patients testés')
+plt.ylabel('Pourcentage de patients guéris')
+plt.grid()
+plt.legend()
+ax.legend(loc='center right')
+plt.show()
 
