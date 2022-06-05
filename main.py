@@ -294,7 +294,7 @@ def strat4(n,N):
 
 
 
-for rep in range(10):
+for rep in range(1):
     listePatients = [0] * K
     listeSurvecus = [0] * K
 
@@ -302,19 +302,25 @@ for rep in range(10):
         for j in range(K):
             betaK[j] = beta(1 + listeSurvecus[j], 1 + listePatients[j] - listeSurvecus[j]).rvs()
         max_index = betaK.index(max(betaK))
+
+        #Decommenter pour faire un test avec apparition d'un variant
+        #if(i==2500):
+        #    probaK[max_index] = 0
+
         strat4(max_index,i)
 
-
-plt.plot(courbe0/10,label='Remède 1')
-plt.plot(courbe1/10,label='Remède 2')
-plt.plot(courbe2/10,label='Remède 3')
-plt.plot(courbe3/10,label='Remède 4')
-plt.plot(courbe4/10,label='Remède 5')
-plt.plot(courbe5/10,label='Remède 6')
-plt.plot(courbe6/10,label='Remède 7')
-plt.plot(courbe7/10,label='Remède 8')
-plt.plot(courbe8/10,label='Remède 9')
-plt.plot(courbe9/10,label='Remède 10')
+print(probaK)
+print(listeSurvecus)
+plt.plot(courbe0,label='Remède 1')
+plt.plot(courbe1,label='Remède 2')
+plt.plot(courbe2,label='Remède 3')
+plt.plot(courbe3,label='Remède 4')
+plt.plot(courbe4,label='Remède 5')
+plt.plot(courbe5,label='Remède 6')
+plt.plot(courbe6,label='Remède 7')
+plt.plot(courbe7,label='Remède 8')
+plt.plot(courbe8,label='Remède 9')
+plt.plot(courbe9,label='Remède 10')
 plt.title('Evolution du nombre de patients guéris en \n fonction du nombre de patients testés')
 plt.xlabel('Somme des patients testés')
 plt.ylabel('Nombre de patients guéris')
