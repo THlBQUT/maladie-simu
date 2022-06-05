@@ -250,8 +250,8 @@ ax.legend(loc='center right')
 plt.show()
 
 #strategie 4
-pkn = [0]*K
-maxpkn = 0
+betaK = [0]*K
+
 # listes pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de personnes guéris
 courbe0 = np.zeros(N); courbe1 = np.zeros(N); courbe2 = np.zeros(N); courbe3 = np.zeros(N);
 courbe4 = np.zeros(N); courbe5 = np.zeros(N); courbe6 = np.zeros(N); courbe7 = np.zeros(N);
@@ -262,17 +262,8 @@ NbPatient0 = np.zeros(N); NbPatient1 = np.zeros(N); NbPatient2 = np.zeros(N); Nb
 NbPatient4 = np.zeros(N); NbPatient5 = np.zeros(N); NbPatient6 = np.zeros(N); NbPatient7 = np.zeros(N);
 NbPatient8 = np.zeros(N); NbPatient9 = np.zeros(N)
 
-def strat4init(n):
+def strat4(n,N):
     listePatients[n] += 1
-    pkn[n] = beta(1,1).rvs()
-    if(np.random.binomial(1, probaK[n]) == 1):
-        listeSurvecus[n] += 1
-    courbe0[0] , courbe1[0], courbe2[0], courbe3[0], courbe4[0] = 0, 0, 0, 0, 0
-    courbe5[0] , courbe6[0], courbe7[0], courbe8[0], courbe9[0] = 0, 0, 0, 0, 0
-
-def strat4choix(n,N):
-    listePatients[n] += 1
-    pkn[n] = beta(1+listeSurvecus[n],1+ listePatients[n] - listeSurvecus[n]).rvs()
     if(np.random.binomial(1, probaK[n]) == 1):
         listeSurvecus[n] += 1
     #Incrémentation la liste des personnes guéris dans la liste de chaque remèdes N étant le numéro du patient
@@ -280,32 +271,40 @@ def strat4choix(n,N):
     courbe3[N] += listeSurvecus[3]; courbe4[N] += listeSurvecus[4]; courbe5[N] += listeSurvecus[5]
     courbe6[N] += listeSurvecus[6]; courbe7[N] += listeSurvecus[7]; courbe8[N] += listeSurvecus[8]
     courbe9[N] += listeSurvecus[9]
-    NbPatient0[N] += listeSurvecus[0] / listePatients[0]; NbPatient1[N] += listeSurvecus[1] / listePatients[1]
-    NbPatient2[N] += listeSurvecus[2] / listePatients[2]; NbPatient3[N] += listeSurvecus[3] / listePatients[3]
-    NbPatient4[N] += listeSurvecus[4] / listePatients[4]; NbPatient5[N] += listeSurvecus[5] / listePatients[5]
-    NbPatient6[N] += listeSurvecus[6] / listePatients[6]; NbPatient7[N] += listeSurvecus[7] / listePatients[7]
-    NbPatient8[N] += listeSurvecus[8] / listePatients[8]; NbPatient9[N] += listeSurvecus[9] / listePatients[9]
+    if(listePatients[0] != 0):
+        NbPatient0[N] += listeSurvecus[0] / listePatients[0]
+    if(listePatients[1] != 0):
+        NbPatient1[N] += listeSurvecus[1] / listePatients[1]
+    if(listePatients[2] != 0):
+        NbPatient2[N] += listeSurvecus[2] / listePatients[2]
+    if(listePatients[3] != 0):
+        NbPatient3[N] += listeSurvecus[3] / listePatients[3]
+    if(listePatients[4] != 0):
+        NbPatient4[N] += listeSurvecus[4] / listePatients[4]
+    if(listePatients[5] != 0):
+        NbPatient5[N] += listeSurvecus[5] / listePatients[5]
+    if(listePatients[6] != 0):
+        NbPatient6[N] += listeSurvecus[6] / listePatients[6]
+    if(listePatients[7] != 0):
+        NbPatient7[N] += listeSurvecus[7] / listePatients[7]
+    if(listePatients[8] != 0):
+        NbPatient8[N] += listeSurvecus[8] / listePatients[8]
+    if(listePatients[9] != 0):
+        NbPatient9[N] += listeSurvecus[9] / listePatients[9]
+
 
 
 for rep in range(10):
     listePatients = [0] * K
     listeSurvecus = [0] * K
-    #initialisation
-    for j in range(K):
-        strat4init(j)
 
-    for j in range(K):
-        if pkn[maxpkn] < pkn[j]:
-            maxpkn = j
+    for i in range(K,N):
+        for j in range(K):
+            betaK[j] = beta(1 + listeSurvecus[j], 1 + listePatients[j] - listeSurvecus[j]).rvs()
+        max_index = betaK.index(max(betaK))
+        strat4(max_index,i)
 
-    #initialisation fin
 
-    for j in range(K,N):
-        strat4choix(maxpkn,j)
-
-        for i in range(K):
-            if pkn[maxpkn] < pkn[i]:
-                maxpkn = i
 plt.plot(courbe0/10,label='Remède 1')
 plt.plot(courbe1/10,label='Remède 2')
 plt.plot(courbe2/10,label='Remède 3')
