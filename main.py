@@ -249,6 +249,7 @@ plt.legend()
 ax.legend(loc='center right')
 plt.show()
 
+
 #strategie 4
 betaK = [0]*K
 
@@ -336,6 +337,37 @@ plt.plot(NbPatient9,label='Remède 10')
 plt.title('Pourcentage de patients guéris en \n fonction du nombre de patients testés')
 plt.xlabel('Somme des patients testés')
 plt.ylabel('Pourcentage de patients guéris')
+plt.grid()
+plt.legend()
+ax.legend(loc='center right')
+plt.show()
+
+#strategie 5
+
+# listes pour chaque remèdes avec N colonnes pour constater l'évolution du nbr de pers ayant eu le remede X
+NbPatient0 = np.zeros(N-10*K);
+
+def strat5init(K):
+    for i in range(K):
+        for j in range(10):
+            listePatients[i] += 1
+            if(np.random.binomial(1, probaK[i]) == 1):
+                listeSurvecus[i] += 1
+    return listeSurvecus.index(max(listeSurvecus))
+
+max_index = strat5init(K)
+
+for i in range(N-10*K):
+    listePatients[max_index] += 1
+    if (np.random.binomial(1, probaK[max_index]) == 1):
+        listeSurvecus[max_index] += 1
+    NbPatient0[i] += listeSurvecus[max_index] / listePatients[max_index]
+
+ax = plt.subplot(111)
+plt.plot(NbPatient0,label='Remède '+str(max_index+1))
+plt.title('Evolution du pourcentage de patients traités par\n le remède choisis')
+plt.xlabel('Somme des patients testés')
+plt.ylabel('Pourcentage de réussite du traitement')
 plt.grid()
 plt.legend()
 ax.legend(loc='center right')
