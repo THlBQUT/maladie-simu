@@ -88,6 +88,7 @@ def strat2choix(n,N):
 
 
 for rep in range(10):
+    probaK = [np.sqrt(83) / 100, 0.393, 0.012, 0.524, 0.876, 0.690, 0.420, 0.0314, 0.666, 0.0142]
     listePatients = [0] * K
     listeSurvecus = [0] * K
     #initialisation
@@ -102,6 +103,10 @@ for rep in range(10):
 
     for j in range(K,N):
         strat2choix(maxpkn,j)
+
+        # Decommenter pour faire un test avec apparition d'un variant
+        #if(j==2500):
+        #    probaK[4] = 0
 
         for i in range(K):
             if pkn[maxpkn] < pkn[i]:
@@ -189,6 +194,7 @@ def strat3choix(n,N):
     NbPatient8[N] += listeSurvecus[8] / listePatients[8]; NbPatient9[N] += listeSurvecus[9] / listePatients[9]
 
 for rep in range(10):
+    probaK = [np.sqrt(83) / 100, 0.393, 0.012, 0.524, 0.876, 0.690, 0.420, 0.0314, 0.666, 0.0142]
     listePatients = [0] * K
     listeSurvecus = [0] * K
     #initialisation
@@ -203,6 +209,10 @@ for rep in range(10):
 
     for j in range(K,N):
         strat3choix(maxpkn,j)
+
+        # Decommenter pour faire un test avec apparition d'un variant
+        #if (j == 2500):
+        #    probaK[4] = 0
 
         for i in range(K):
             if bornSupPkn[maxpkn] < bornSupPkn[i]:
